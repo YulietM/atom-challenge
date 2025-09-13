@@ -1,0 +1,83 @@
+.dialog-container {
+    padding: 1rem;
+}
+
+h2[mat-dialog-title] {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.dialog-content {
+    min-width: 400px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.dialog-actions {
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+
+    .cancel-button {
+        color: #666;
+    }
+
+    .submit-button {
+        min-width: 100px;
+        font-weight: 500;
+    }
+}
+
+mat-form-field {
+    .mat-mdc-form-field-error {
+        font-size: 0.75rem;
+    }
+
+    .mat-mdc-form-field-hint {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .dialog-content {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .dialog-actions {
+        flex-direction: column-reverse;
+        gap: 0.5rem;
+        
+        button {
+            width: 100%;
+        }
+    }
+
+    h2[mat-dialog-title] {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dialog-container {
+        padding: 0.75rem;
+    }
+
+    .task-form {
+        gap: 1rem;
+    }
+}

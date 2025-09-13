@@ -1,0 +1,103 @@
+<div class="login-container">
+    <mat-card class="login-card">
+        <mat-card-header>
+            <mat-card-title>{{ showRegisterForm ? 'Crear Cuenta' : 'Iniciar Sesión' }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ showRegisterForm ? 'Completa tu información para crear tu cuenta' : 'Ingresa tu correo electrónico para continuar' }}
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form *ngIf="!showRegisterForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input
+                        matInput
+                        type="email"
+                        formControlName="email"
+                        placeholder="Ingresa tu correo electrónico"
+                        [class.mat-form-field-invalid]="emailControl?.invalid && emailControl?.touched"
+                        autocomplete="email"
+                    >
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="emailControl?.hasError('required')">
+                        El correo electrónico es requerido
+                    </mat-error>
+                    <mat-error *ngIf="emailControl?.hasError('email')">
+                        Ingresa un correo electrónico válido
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="error-message" *ngIf="errorMessage">
+                    <mat-icon>error</mat-icon>
+                    {{ errorMessage }}
+                </div>
+
+                <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    class="login-button full-width"
+                    [disabled]="loginForm.invalid || isLoading"
+                >
+                    <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+                    <mat-icon *ngIf="!isLoading">login</mat-icon>
+                    <span *ngIf="!isLoading">Continuar</span>
+                </button>
+            </form>
+
+            <form *ngIf="showRegisterForm" [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+                <div class="user-info">
+                    <mat-icon>email</mat-icon>
+                    <span>{{ userEmail }}</span>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Nombre completo</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        formControlName="name"
+                        placeholder="Ingresa tu nombre completo"
+                        [class.mat-form-field-invalid]="nameControl?.invalid && nameControl?.touched"
+                        autocomplete="name"
+                    >
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error *ngIf="nameControl?.hasError('required')">
+                        El nombre es requerido
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="error-message" *ngIf="errorMessage">
+                    <mat-icon>error</mat-icon>
+                    {{ errorMessage }}
+                </div>
+
+                <div class="button-group">
+                    <button
+                        mat-button
+                        type="button"
+                        class="back-button"
+                        (click)="backToLogin()"
+                        [disabled]="isLoading"
+                    >
+                        <mat-icon>arrow_back</mat-icon>
+                        Volver
+                    </button>
+
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        type="submit"
+                        class="register-button"
+                        [disabled]="registerForm.invalid || isLoading"
+                    >
+                        <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+                        <mat-icon *ngIf="!isLoading">person_add</mat-icon>
+                        <span *ngIf="!isLoading">Crear Cuenta</span>
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

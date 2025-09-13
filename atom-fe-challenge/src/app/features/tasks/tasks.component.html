@@ -1,0 +1,44 @@
+<div class="tasks-container">
+    <mat-toolbar class="tasks-toolbar" color="primary">
+        <span class="toolbar-title">Mis Tareas</span>
+        <span class="spacer"></span>
+        <ng-container *ngIf="currentUser$ | async as user">
+            <span class="user-email">{{ user.email }}</span>
+            <button mat-icon-button (click)="onLogout()" title="Cerrar sesión">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </ng-container>
+    </mat-toolbar>
+
+    <div class="tasks-content">
+        <div class="tasks-header">
+            <h2>Lista de Tareas</h2>
+        </div>
+
+        <div class="tasks-body" *ngIf="!isLoading; else loadingTemplate">
+            <app-task-list 
+                [tasks]="tasks$ | async"
+                (editTask)="onEditTask($event)"
+                (deleteTask)="onDeleteTask($event)"
+                (toggleCompletion)="onToggleTaskCompletion($event)"
+            ></app-task-list>
+        </div>
+
+        <ng-template #loadingTemplate>
+            <div class="loading-container">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Cargando tareas...</p>
+            </div>
+        </ng-template>
+    </div>
+
+    <button 
+        mat-fab 
+        color="accent" 
+        class="add-task-fab"
+        (click)="onAddTask()"
+        title="Agregar nueva tarea"
+    >
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,67 @@
+<div class="task-list-container">
+    <div class="task-cards" *ngIf="sortedTasks.length > 0; else emptyState">
+        <div 
+            *ngFor="let task of sortedTasks; trackBy: trackByTaskId" 
+            class="task-card"
+            [class.completed]="task.done"
+        >
+            <div class="task-card-header">
+                <mat-checkbox 
+                    [checked]="task.done"
+                    (change)="onToggleCompletion(task.id!)"
+                    class="task-checkbox"
+                    [color]="'primary'"
+                >
+                </mat-checkbox>
+                <h3 class="task-title" [class.completed-title]="task.done">
+                    {{ task.title }}
+                </h3>
+                <div class="task-actions">
+                    <button 
+                        mat-icon-button 
+                        (click)="onEditTask(task)"
+                        class="action-button edit-button"
+                        title="Editar tarea"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button 
+                        mat-icon-button 
+                        (click)="onDeleteTask(task.id!)"
+                        class="action-button delete-button"
+                        title="Eliminar tarea"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            
+            <p class="task-description" [class.completed-text]="task.done">
+                {{ task.description }}
+            </p>
+            
+            <div class="task-footer">
+                <div class="task-meta">
+                    <span class="task-date">
+                        <mat-icon class="date-icon">schedule</mat-icon>
+                        {{ formatDate(task.createdAt) }}
+                    </span>
+                </div>
+                <div class="task-status" [class.status-completed]="task.done">
+                    <mat-icon class="status-icon">
+                        {{ task.done ? 'check_circle' : 'radio_button_unchecked' }}
+                    </mat-icon>
+                    {{ task.done ? 'Completada' : 'Pendiente' }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #emptyState>
+        <div class="empty-state">
+            <mat-icon class="empty-icon">assignment</mat-icon>
+            <h3>No hay tareas</h3>
+            <p>¡Comienza agregando tu primera tarea!</p>
+        </div>
+    </ng-template>
+</div>

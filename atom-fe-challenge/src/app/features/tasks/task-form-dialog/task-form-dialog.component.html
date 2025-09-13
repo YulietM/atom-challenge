@@ -1,0 +1,64 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title>{{ dialogTitle }}</h2>
+    
+    <mat-dialog-content class="dialog-content">
+        <form [formGroup]="taskForm" class="task-form">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Título de la tarea</mat-label>
+                <input 
+                    matInput 
+                    type="text" 
+                    formControlName="title" 
+                    placeholder="Ej: Revisar documentos"
+                    maxlength="100"
+                >
+                <mat-hint align="end">{{ titleControl?.value?.length || 0 }}/100</mat-hint>
+                <mat-error *ngIf="titleControl?.hasError('required')">
+                    El título es requerido
+                </mat-error>
+                <mat-error *ngIf="titleControl?.hasError('minlength')">
+                    El título debe tener al menos 3 caracteres
+                </mat-error>
+                <mat-error *ngIf="titleControl?.hasError('maxlength')">
+                    El título no puede exceder 100 caracteres
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Descripción</mat-label>
+                <textarea 
+                    matInput 
+                    formControlName="description" 
+                    placeholder="Describe en detalle lo que necesitas hacer..."
+                    rows="4"
+                    maxlength="500"
+                ></textarea>
+                <mat-hint align="end">{{ descriptionControl?.value?.length || 0 }}/500</mat-hint>
+                <mat-error *ngIf="descriptionControl?.hasError('required')">
+                    La descripción es requerida
+                </mat-error>
+                <mat-error *ngIf="descriptionControl?.hasError('minlength')">
+                    La descripción debe tener al menos 10 caracteres
+                </mat-error>
+                <mat-error *ngIf="descriptionControl?.hasError('maxlength')">
+                    La descripción no puede exceder 500 caracteres
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions class="dialog-actions">
+        <button mat-button (click)="onCancel()" class="cancel-button">
+            Cancelar
+        </button>
+        <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="onSubmit()"
+            [disabled]="taskForm.invalid"
+            class="submit-button"
+        >
+            {{ submitButtonText }}
+        </button>
+    </mat-dialog-actions>
+</div>
